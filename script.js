@@ -1,4 +1,4 @@
-  // Typing animation
+      // Typing animation
         const typewriterText = document.getElementById('typewriter-text');
         const texts = ['Frontend Developer', 'Web Designer', 'UI/UX Specialist', 'Tech Enthusiast'];
         let textIndex = 0;
