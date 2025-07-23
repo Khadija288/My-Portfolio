@@ -1,137 +1,121 @@
-         // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+  // Typing animation
+        const typewriterText = document.getElementById('typewriter-text');
+        const texts = ['Frontend Developer', 'Web Designer', 'UI/UX Specialist', 'Tech Enthusiast'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
         
-        // Navbar background change on scroll
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
+        function type() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                // Remove characters
+                typewriterText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
             } else {
-                navbar.classList.remove('scrolled');
+                // Add characters
+                typewriterText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
             }
-        });
+            
+            // Determine typing speed
+            let typeSpeed = 100;
+            
+            if (isDeleting) {
+                typeSpeed /= 2;
+            }
+            
+            // Check if word is complete
+            if (!isDeleting && charIndex === currentText.length) {
+                // Pause at end of word
+                typeSpeed = 1500;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                // Move to next word
+                isDeleting = false;
+                textIndex++;
+                if (textIndex === texts.length) {
+                    textIndex = 0;
+                }
+            }
+            
+            setTimeout(type, typeSpeed);
+        }
         
-        // Project filtering
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
+        // Start typing effect
+        setTimeout(type, 500);
+        
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
                 
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                const filter = this.getAttribute('data-filter');
-                const projects = document.querySelectorAll('.project-card');
-                
-                projects.forEach(project => {
-                    if (filter === 'all' || project.getAttribute('data-category') === filter) {
-                        project.style.display = 'block';
-                    } else {
-                        project.style.display = 'none';
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                    
+                    // Animate progress bars in skills section
+                    if (reveals[i].closest('#skills')) {
+                        const skillItems = reveals[i].querySelectorAll('.skill-item');
+                        skillItems.forEach(item => {
+                            if (!item.classList.contains('active')) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', reveal);
+        
+        // Initialize scroll reveal on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            reveal();
+            
+            // Add smooth scrolling for all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
-        });
-        
-        // Form submission
-        // Initialize EmailJS with your public key
-        emailjs.init("cEwRw3PYPfe5Qdihu");
-        
-        // Form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
             
-            const btn = document.querySelector('.btn');
-            const statusMessage = document.getElementById('statusMessage');
+            // Project filtering
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
             
-            // Show loading state
-            const originalBtnText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-            
-            // Collect form data
-            const formData = {
-                from_name: document.getElementById('name').value,
-                from_email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-            
-            // Send email using EmailJS
-            emailjs.send("service_p2zx7he", "template_ri8r556", formData)
-                .then(function(response) {
-                    // Success message
-                    statusMessage.textContent = "Thank you! Your message has been sent successfully.";
-                    statusMessage.className = "status-message success";
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
                     
-                    // Reset form
-                    document.getElementById('contactForm').reset();
-                })
-                .catch(function(error) {
-                    // Error message
-                    statusMessage.textContent = "Oops! Something went wrong. Please try again later.";
-                    statusMessage.className = "status-message error";
-                    console.error("Email sending failed:", error);
-                })
-                .finally(function() {
-                    // Reset button state
-                    btn.innerHTML = originalBtnText;
-                    btn.disabled = false;
+                    // Add active class to clicked button
+                    btn.classList.add('active');
                     
-                    // Clear message after 5 seconds
-                    setTimeout(() => {
-                        statusMessage.style.display = "none";
-                    }, 5000);
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    // Filter projects
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
-        });
-        
-        // Animate progress bars when in view
-        const progressBars = document.querySelectorAll('.skill-progress');
-        
-        function animateProgressBars() {
-            progressBars.forEach(bar => {
-                const rect = bar.getBoundingClientRect();
-                const isVisible = (rect.top <= window.innerHeight && rect.bottom >= 0);
-                
-                if (isVisible && !bar.classList.contains('animated')) {
-                    const width = bar.getAttribute('data-width');
-                    bar.style.width = width + '%';
-                    bar.classList.add('animated');
-                }
             });
-        }
-        
-        // Fade-in animation for elements
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        function checkFade() {
-            fadeElements.forEach(element => {
-                const rect = element.getBoundingClientRect();
-                const isVisible = (rect.top <= window.innerHeight - 50 && rect.bottom >= 0);
-                
-                if (isVisible) {
-                    element.classList.add('appeared');
-                }
-            });
-        }
-        
-        // Initialize on load
-        window.addEventListener('load', function() {
-            animateProgressBars();
-            checkFade();
-        });
-        
-        // Event listeners
-        window.addEventListener('scroll', function() {
-            animateProgressBars();
-            checkFade();
         });
