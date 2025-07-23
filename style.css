@@ -509,7 +509,7 @@
         }
         
         .contact-form .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 80px;
         }
         
         .contact-form .form-control {
@@ -518,7 +518,7 @@
             border-radius: 8px;
             padding: 10px 15px;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
+            margin-bottom: 80px;
         }
         
         .contact-form .form-control:focus {
