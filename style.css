@@ -58,7 +58,6 @@
             background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
             text-decoration: none;
             transition: var(--transition);
         }
