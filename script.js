@@ -113,7 +113,6 @@
                         if (filter === 'all' || card.getAttribute('data-category') === filter) {
                             card.style.display = 'block';
                         } else {
-                            card.style.display = 'none';
                         }
                     });
                 });
