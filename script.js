@@ -45,36 +45,71 @@
         // Start typing effect
         setTimeout(type, 500);
         
-        // Scroll reveal animation
-        function reveal() {
-            const reveals = document.querySelectorAll('.reveal');
+        // Theme toggle functionality
+        function initTheme() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const body = document.body;
             
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 150;
+            // Check for saved theme preference or default to 'dark'
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            body.setAttribute('data-theme', currentTheme);
+            
+            // Update icon based on current theme
+            updateThemeIcon(currentTheme, themeIcon);
+            
+            // Add click event listener
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add('active');
-                    
-                    // Animate progress bars in skills section
-                    if (reveals[i].closest('#skills')) {
-                        const skillItems = reveals[i].querySelectorAll('.skill-item');
-                        skillItems.forEach(item => {
-                            if (!item.classList.contains('active')) {
-                                item.classList.add('active');
-                            }
-                        });
-                    }
-                }
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme, themeIcon);
+                
+                // Add a subtle animation to the toggle button
+                themeToggle.style.transform = 'rotate(360deg)';
+                setTimeout(() => {
+                    themeToggle.style.transform = '';
+                }, 400);
+            });
+        }
+        
+        function updateThemeIcon(theme, iconElement) {
+            if (theme === 'light') {
+                iconElement.className = 'fas fa-moon';
+            } else {
+                iconElement.className = 'fas fa-sun';
             }
         }
         
-        window.addEventListener('scroll', reveal);
+        // Header scroll effect
+        function handleScroll() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        // Enhanced scroll animations (removed old reveal function - using AOS now)
         
         // Initialize scroll reveal on page load
         window.addEventListener('DOMContentLoaded', () => {
-            reveal();
+            // Initialize theme
+            initTheme();
+            
+            // Initialize AOS (Animate On Scroll)
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false,
+                offset: 100
+            });
             
             // Add smooth scrolling for all links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -87,7 +122,7 @@
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80,
+                            top: targetElement.offsetTop - 100, // Increased offset for better spacing
                             behavior: 'smooth'
                         });
                     }

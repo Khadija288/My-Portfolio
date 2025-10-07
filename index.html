@@ -6,6 +6,8 @@
     <title>Khadija | Frontend Developer</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS (Animate On Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,16 +21,20 @@
             <a href="#services">Services</a>
             <a href="#contact">Contact</a>
         </nav>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-sun" id="theme-icon"></i>
+        </button>
     </header>
 
     <!-- Hero Section -->
+    <section class="hero" id="home">
         <div class="hero-content">
-            <h1>Hi, I'm <span>Khadija</span></h1>
-            <div class="typewriter">
+            <h1 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Hi, I'm <span>Khadija</span></h1>
+            <div class="typewriter" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                 <span id="typewriter-text">Frontend Developer</span>
             </div>
-            <p>I create stunning, responsive websites with cutting-edge technologies and modern design principles. Passionate about crafting seamless user experiences.</p>
-            <div class="hero-btns">
+            <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">I create stunning, responsive websites with cutting-edge technologies and modern design principles. Passionate about crafting seamless user experiences.</p>
+            <div class="hero-btns" data-aos="bounce" data-aos-duration="1200" data-aos-delay="800">
                 <a href="#projects" class="btn btn-primary">View My Work</a>
             </div>
         </div>
@@ -36,24 +42,24 @@
 
     <!-- About Section -->
     <section class="about" id="about">
-        <h2 class="section-title reveal">About Me</h2>
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="800">About Me</h2>
         <div class="about-content">
-            <div class="about-image reveal">
+            <div class="about-image" data-aos="fade-right" data-aos-duration="1000">
                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Khadija">
             </div>
-            <div class="about-text reveal">
+            <div class="about-text" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                 <p>Hello! I'm Khadija, a passionate frontend developer with a strong focus on creating engaging and responsive web experiences. I specialize in turning ideas into reality through clean, efficient code and thoughtful design.</p>
                 <p>With over 3 years of experience in the industry, I've worked on various projects ranging from small business websites to complex web applications. My approach combines technical expertise with creative problem-solving to deliver outstanding results.</p>
                 <h3>My Expertise</h3>
                 <div class="skills">
-                    <div class="skill">HTML5</div>
-                    <div class="skill">CSS3</div>
-                    <div class="skill">JavaScript</div>
-                    <div class="skill">Bootstrap</div>
-                    <div class="skill">Git & GitHub</div>
-                    <div class="skill">Responsive Design</div>
-                    <div class="skill">UI/UX Design</div>
-                    <div class="skill">React</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="100">HTML5</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="200">CSS3</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="300">JavaScript</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="400">Bootstrap</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="500">Git & GitHub</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="600">Responsive Design</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="700">UI/UX Design</div>
+                    <div class="skill" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="800">React</div>
                 </div>
             </div>
         </div>
@@ -61,9 +67,9 @@
 
     <!-- Skills Section -->
     <section class="skills-section" id="skills">
-        <h2 class="section-title reveal">My Skills</h2>
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="800">My Skills</h2>
         <div class="skills-grid">
-            <div class="skill-category reveal">
+            <div class="skill-category" data-aos="fade-right" data-aos-duration="1000">
                 <h3>Frontend Development</h3>
                 <div class="skill-item">
                     <div class="skill-header">
@@ -103,7 +109,7 @@
                 </div>
             </div>
             
-            <div class="skill-category reveal">
+            <div class="skill-category" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                 <h3>Tools & Technologies</h3>
                 <div class="skill-item">
                     <div class="skill-header">
@@ -147,14 +153,14 @@
 
     <!-- Projects Section -->
     <section class="projects" id="projects">
-        <h2 class="section-title reveal">My Projects</h2>
-        <div class="project-filters">
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="800">My Projects</h2>
+        <div class="project-filters" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
             <button class="filter-btn active" data-filter="all">All Projects</button>
             <button class="filter-btn" data-filter="website">Websites</button>
             <button class="filter-btn" data-filter="webapp">Web Apps</button>
         </div>
         <div class="projects-grid">
-            <div class="project-card reveal" data-category="website">
+            <div class="project-card" data-category="website" data-aos="flip-left" data-aos-duration="800" data-aos-delay="100">
                 <div class="project-img">
                     <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="E-commerce Dashboard">
                 </div>
@@ -173,7 +179,7 @@
                 </div>
             </div>
             
-            <div class="project-card reveal" data-category="webapp">
+            <div class="project-card" data-category="webapp" data-aos="flip-left" data-aos-duration="800" data-aos-delay="300">
                 <div class="project-img">
                     <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Fitness Tracker App">
                 </div>
@@ -192,7 +198,7 @@
                 </div>
             </div>
             
-            <div class="project-card reveal" data-category="website">
+            <div class="project-card" data-category="website" data-aos="flip-left" data-aos-duration="800" data-aos-delay="500">
                 <div class="project-img">
                     <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Travel Blog Platform">
                 </div>
@@ -215,9 +221,9 @@
 
     <!-- Services Section -->
     <section class="services" id="services">
-        <h2 class="section-title reveal">My Services</h2>
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="800">My Services</h2>
         <div class="services-grid">
-            <div class="service-card reveal">
+            <div class="service-card" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="100">
                 <div class="service-icon">
                     <i class="fas fa-code"></i>
                 </div>
@@ -225,7 +231,7 @@
                 <p>Custom websites built with modern technologies, optimized for performance and accessibility.</p>
             </div>
             
-            <div class="service-card reveal">
+            <div class="service-card" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="300">
                 <div class="service-icon">
                     <i class="fas fa-paint-brush"></i>
                 </div>
@@ -233,7 +239,7 @@
                 <p>User-centered design solutions that enhance engagement and create memorable experiences.</p>
             </div>
             
-            <div class="service-card reveal">
+            <div class="service-card" data-aos="zoom-in" data-aos-duration="600" data-aos-delay="500">
                 <div class="service-icon">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
@@ -245,13 +251,13 @@
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
-        <h2 class="section-title reveal">Get In Touch</h2>
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="800">Get In Touch</h2>
         <div class="contact-container">
-            <div class="contact-info reveal">
+            <div class="contact-info" data-aos="fade-right" data-aos-duration="1000">
                 <h3>Let's talk about your project</h3>
                 <p>I'm currently available for freelance work and full-time positions. Feel free to reach out to discuss your project needs.</p>
                 <div class="contact-details">
-                    <div class="contact-item">
+                    <div class="contact-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
@@ -259,7 +265,7 @@
                             <a href="mailto:khadija@example.com">khadija@example.com</a>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
                         <div class="contact-icon">
                             <i class="fas fa-phone"></i>
                         </div>
@@ -267,7 +273,7 @@
                             <a href="tel:+1234567890">+1 (234) 567-890</a>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
                         <div class="contact-icon">
                             <i class="fab fa-github"></i>
                         </div>
@@ -275,7 +281,7 @@
                             <a href="https://github.com/khadija" target="_blank">github.com/khadija</a>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
                         <div class="contact-icon">
                             <i class="fab fa-linkedin-in"></i>
                         </div>
@@ -285,7 +291,7 @@
                     </div>
                 </div>
             </div>
-            <form class="contact-form reveal">
+            <form class="contact-form" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" required>
@@ -307,7 +313,7 @@
     <footer>
         <div class="footer-content">
             <h2>Khadija</h2>
-            <p>Creative Frontend Developer</p>
+            <p>Creative Developer</p>
             <div class="social-links">
                 <a href="#"><i class="fab fa-github"></i></a>
                 <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -325,6 +331,8 @@
         <i class="fas fa-paper-plane"></i>
     </a>
 
+    <!-- AOS (Animate On Scroll) Library Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
