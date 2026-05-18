@@ -95,6 +95,90 @@
         
         window.addEventListener('scroll', handleScroll);
         
+        // Skills Animation with Intersection Observer
+function initSkillsAnimation() {
+    const skillsSection = document.querySelector('.skills-section');
+    const skillItems = document.querySelectorAll('.skill-item');
+    let hasAnimated = false; // Ensure animation runs only once
+
+    // Intersection Observer to detect when skills section is visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                hasAnimated = true;
+                animateSkills();
+                observer.unobserve(entry.target); // Stop observing after animation
+            }
+        });
+    }, {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px -50px 0px' // Adjust trigger point
+    });
+
+    if (skillsSection) {
+        observer.observe(skillsSection);
+    }
+
+    function animateSkills() {
+        skillItems.forEach((item, index) => {
+            // ✅ FIX: agar data-percentage attribute nahi hai to span ke text se number nikalo
+            let percentage = item.getAttribute('data-percentage');
+            if (!percentage) {
+                const percentTextElement = item.querySelector('.skill-percent');
+                if (percentTextElement) {
+                    percentage = parseInt(percentTextElement.textContent);
+                }
+            } else {
+                percentage = parseInt(percentage);
+            }
+
+            const progressBar = item.querySelector('.skill-progress');
+            const percentText = item.querySelector('.skill-percent');
+
+            // Add staggered delay for each skill item
+            setTimeout(() => {
+                // Add animation class
+                item.classList.add('animate');
+
+                // Animate progress bar width
+                progressBar.style.width = percentage + '%';
+
+                // Animate percentage text
+                animatePercentage(percentText, 0, percentage, 1000); // 1 second duration
+
+            }, index * 150); // 150ms delay between each skill
+        });
+    }
+
+    function animatePercentage(element, start, end, duration) {
+        const startTime = performance.now();
+        const range = end - start;
+
+        function updatePercentage(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Use easing function for smooth animation
+            const easedProgress = easeOutCubic(progress);
+            const currentValue = Math.round(start + (range * easedProgress));
+
+            element.textContent = currentValue + '%';
+
+            if (progress < 1) {
+                requestAnimationFrame(updatePercentage);
+            }
+        }
+
+        requestAnimationFrame(updatePercentage);
+    }
+
+    // Easing function for smooth animation
+    function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+    }
+}
+
+        
         // Enhanced scroll animations (removed old reveal function - using AOS now)
         
         // Initialize scroll reveal on page load
@@ -110,6 +194,9 @@
                 mirror: false,
                 offset: 100
             });
+            
+            // Initialize skills animation
+            initSkillsAnimation();
             
             // Add smooth scrolling for all links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {

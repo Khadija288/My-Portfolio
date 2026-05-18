@@ -360,6 +360,23 @@
             transition: var(--transition);
         }
 
+        .about-image:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(183, 33, 255, 0.4),
+                        0 0 60px rgba(33, 212, 253, 0.2);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(183, 33, 255, 0.2), rgba(33, 212, 253, 0.2));
+            z-index: 1;
+        }
+
         .about-image img {
             width: 100%;
             height: auto;
@@ -477,10 +494,23 @@
             overflow: hidden;
             position: relative;
             transition: var(--transition);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .skill-bar:hover {
-            box-shadow: 0 0 10px rgba(33, 212, 253, 0.2);
+            box-shadow: 0 0 10px rgba(33, 212, 253, 0.2),
+                        inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Light mode skill bar */
+        [data-theme="light"] .skill-bar {
+            background: rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="light"] .skill-bar:hover {
+            box-shadow: 0 0 10px rgba(142, 68, 173, 0.2),
+                        inset 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .skill-progress {
@@ -490,12 +520,35 @@
             position: absolute;
             top: 0;
             left: 0;
-            transform: translateX(-100%);
-            transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: 0%; /* Start at 0% */
+            transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 0 10px rgba(183, 33, 255, 0.3);
         }
 
-        .skill-item.active .skill-progress {
-            transform: translateX(0);
+        /* Animated state - will be added via JavaScript */
+        .skill-item.animate .skill-progress {
+            transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 0 15px rgba(183, 33, 255, 0.5),
+                        0 0 25px rgba(33, 212, 253, 0.3);
+        }
+
+        /* Add a subtle pulse animation during the fill */
+        @keyframes skillPulse {
+            0% {
+                box-shadow: 0 0 10px rgba(183, 33, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(183, 33, 255, 0.6),
+                            0 0 30px rgba(33, 212, 253, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(183, 33, 255, 0.5),
+                            0 0 25px rgba(33, 212, 253, 0.3);
+            }
+        }
+
+        .skill-item.animate .skill-progress {
+            animation: skillPulse 1s ease-in-out;
         }
 
         /* Projects Section */
@@ -536,15 +589,13 @@
             border-radius: 15px;
             overflow: hidden;
             position: relative;
-            transition: var(--smooth-transition);
+            transition: var(--transition);
             border: 1px solid rgba(183, 33, 255, 0.1);
-            transform: translateY(0);
-            cursor: pointer;
         }
 
         .project-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(183, 33, 255, 0.3),
+            transform: translateY(-15px);
+            box-shadow: 0 0 30px rgba(183, 33, 255, 0.4),
                         0 0 60px rgba(33, 212, 253, 0.2);
             border-color: var(--neon-cyan);
         }
