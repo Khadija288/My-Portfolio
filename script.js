@@ -1,6 +1,6 @@
       // Typing animation
         const typewriterText = document.getElementById('typewriter-text');
-        const texts = ['Frontend Developer', 'Web Designer', 'UI/UX Specialist', 'Tech Enthusiast'];
+        const texts = ['Fullstack Developer', 'Frontend Developer', 'Web Designer', '.NET Developer'];
         let textIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -27,8 +27,8 @@
             
             // Check if word is complete
             if (!isDeleting && charIndex === currentText.length) {
-                // Pause at end of word
-                typeSpeed = 1500;
+                // Pause at end of word (2.5 seconds)
+                typeSpeed = 2500;
                 isDeleting = true;
             } else if (isDeleting && charIndex === 0) {
                 // Move to next word
