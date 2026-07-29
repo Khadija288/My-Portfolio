@@ -240,4 +240,26 @@ function initSkillsAnimation() {
                     });
                 });
             });
+            
+            // Contact form submission - send to WhatsApp
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Create WhatsApp message
+                    const whatsappMessage = `*New Portfolio Contact!*%0A%0AName: ${name}%0AEmail: ${email}%0A%0A${message}`;
+                    const whatsappUrl = `https://wa.me/923185984320?text=${whatsappMessage}`;
+                    
+                    // Open WhatsApp
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Reset form
+                    contactForm.reset();
+                });
+            }
         });
