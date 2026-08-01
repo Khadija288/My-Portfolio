@@ -417,11 +417,11 @@
             border-color: var(--neon-purple);
         }
 
-        /* Skills Section */
+        /* Skills Section - Glassmorphism Redesign */
         .skills-section {
             background: var(--darker-bg);
-            border-radius: 20px;
-            padding: 4rem;
+            border-radius: 24px;
+            padding: 5rem 4rem;
             position: relative;
             overflow: hidden;
             transition: var(--transition);
@@ -433,122 +433,286 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue), var(--neon-cyan));
+            z-index: 1;
         }
 
-        /* Light mode skills section */
-        [data-theme="light"] .skills-section {
-            background: var(--darker-bg);
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .skills-grid {
+        /* Glass Skills Grid */
+        .glass-skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
             margin-top: 3rem;
         }
 
-        .skill-category h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+        /* Glassmorphism Skill Card */
+        .glass-skill-card {
             position: relative;
-            display: inline-block;
-        }
-
-        .skill-category h3::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--neon-purple);
-            border-radius: 2px;
-        }
-
-        .skill-item {
-            margin-bottom: 1.8rem;
-        }
-
-        .skill-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .skill-name {
-            font-weight: 500;
-        }
-
-        .skill-percent {
-            color: var(--neon-cyan);
-            font-weight: 600;
-        }
-
-        .skill-bar {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.5rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
-            position: relative;
-            transition: var(--transition);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(60px);
         }
 
-        .skill-bar:hover {
-            box-shadow: 0 0 10px rgba(33, 212, 253, 0.2),
-                        inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        .glass-skill-card.skill-card-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Light mode skill bar */
-        [data-theme="light"] .skill-bar {
-            background: rgba(0, 0, 0, 0.1);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="light"] .skill-bar:hover {
-            box-shadow: 0 0 10px rgba(142, 68, 173, 0.2),
-                        inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
-            border-radius: 5px;
+        /* Card floating effect */
+        .glass-skill-card::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 0%; /* Start at 0% */
-            transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 0 10px rgba(183, 33, 255, 0.3);
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            background: linear-gradient(135deg,
+                rgba(183, 33, 255, 0.05) 0%,
+                transparent 50%,
+                rgba(33, 212, 253, 0.05) 100%);
         }
 
-        /* Animated state - will be added via JavaScript */
-        .skill-item.animate .skill-progress {
-            transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 0 15px rgba(183, 33, 255, 0.5),
-                        0 0 25px rgba(33, 212, 253, 0.3);
+        .glass-skill-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+                        0 0 40px rgba(183, 33, 255, 0.15),
+                        0 0 80px rgba(33, 212, 253, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border-color: rgba(183, 33, 255, 0.2);
+            animation: cardFloat 4s ease-in-out infinite;
         }
 
-        /* Add a subtle pulse animation during the fill */
-        @keyframes skillPulse {
-            0% {
-                box-shadow: 0 0 10px rgba(183, 33, 255, 0.3);
+        .glass-skill-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Card floating animation */
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(-12px);
             }
             50% {
-                box-shadow: 0 0 20px rgba(183, 33, 255, 0.6),
-                            0 0 30px rgba(33, 212, 253, 0.4);
-            }
-            100% {
-                box-shadow: 0 0 15px rgba(183, 33, 255, 0.5),
-                            0 0 25px rgba(33, 212, 253, 0.3);
+                transform: translateY(-16px);
             }
         }
 
-        .skill-item.animate .skill-progress {
-            animation: skillPulse 1s ease-in-out;
+        /* Gradient accent line at top */
+        .glass-card-accent {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--neon-purple) 30%,
+                var(--neon-blue) 60%,
+                var(--neon-cyan) 100%);
+            border-radius: 0 0 20px 20px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .glass-skill-card:hover .glass-card-accent {
+            width: 80%;
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(183, 33, 255, 0.5);
+        }
+
+        /* Card Header */
+        .glass-card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card-icon {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg,
+                rgba(183, 33, 255, 0.2) 0%,
+                rgba(33, 212, 253, 0.15) 100%);
+            border: 1px solid rgba(183, 33, 255, 0.3);
+            border-radius: 16px;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(183, 33, 255, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-skill-card:hover .glass-card-icon {
+            transform: scale(1.1) rotate(-5deg);
+            background: linear-gradient(135deg,
+                rgba(183, 33, 255, 0.35) 0%,
+                rgba(33, 212, 253, 0.25) 100%);
+            border-color: var(--neon-purple);
+            box-shadow: 0 8px 25px rgba(183, 33, 255, 0.35),
+                        0 0 30px rgba(33, 212, 253, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .glass-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.01em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-skill-card:hover .glass-card-header h3 {
+            background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-cyan) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Skill Chips Container */
+        .skill-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Skill Chip Design - Reversed interaction */
+        .skill-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid transparent;
+            background-image: linear-gradient(rgba(20, 20, 40, 0.8), rgba(20, 20, 40, 0.8)),
+                              linear-gradient(135deg, rgba(183, 33, 255, 0.6), rgba(33, 212, 253, 0.6));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 8px 25px rgba(183, 33, 255, 0.25),
+                        0 0 20px rgba(33, 212, 253, 0.15),
+                        0 0 40px rgba(183, 33, 255, 0.08);
+            transform: translateY(-3px) scale(1.06);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-chip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                rgba(183, 33, 255, 0.08) 0%,
+                rgba(33, 212, 253, 0.05) 100%);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .skill-chip:hover {
+            transform: translateY(0) scale(1);
+            box-shadow: none;
+            border-color: transparent;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04)),
+                              linear-gradient(135deg, rgba(183, 33, 255, 0.3), rgba(33, 212, 253, 0.3));
+            color: var(--text-light);
+            text-shadow: none;
+        }
+
+        .skill-chip:hover::before {
+            opacity: 0;
+        }
+
+        /* Light mode glass skills section */
+        [data-theme="light"] .skills-section {
+            background: #f8f9fc;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="light"] .glass-skill-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="light"] .glass-skill-card:hover {
+            box-shadow: 0 20px 60px rgba(142, 68, 173, 0.12),
+                        0 0 40px rgba(52, 152, 219, 0.08),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            border-color: rgba(142, 68, 173, 0.15);
+        }
+
+        [data-theme="light"] .glass-card-icon {
+            background: linear-gradient(135deg,
+                rgba(142, 68, 173, 0.12) 0%,
+                rgba(52, 152, 219, 0.1) 100%);
+            border: 1px solid rgba(142, 68, 173, 0.2);
+            color: var(--neon-purple);
+        }
+
+        [data-theme="light"] .glass-card-header h3 {
+            background: linear-gradient(135deg, #2c3e50 0%, #7f8c8d 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        [data-theme="light"] .skill-chip {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a2e;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
+                              linear-gradient(135deg, rgba(142, 68, 173, 0.4), rgba(52, 152, 219, 0.4));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 8px 25px rgba(142, 68, 173, 0.18),
+                        0 0 20px rgba(52, 152, 219, 0.1);
+            transform: translateY(-3px) scale(1.06);
+            text-shadow: none;
+        }
+
+        [data-theme="light"] .skill-chip:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                              linear-gradient(135deg, rgba(142, 68, 173, 0.2), rgba(52, 152, 219, 0.2));
+            box-shadow: none;
+            transform: translateY(0) scale(1);
         }
 
         /* Projects Section */
@@ -966,6 +1130,13 @@
         /* AOS will handle all scroll animations now */
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .glass-skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
         @media (max-width: 992px) {
             header {
                 padding: 1rem 5%;
@@ -998,6 +1169,10 @@
             .about-image {
                 max-width: 400px;
                 margin: 0 auto;
+            }
+
+            .skills-section {
+                padding: 4rem 2.5rem;
             }
         }
 
@@ -1046,9 +1221,24 @@
             }
             
             .skills-section {
-                padding: 2rem;
+                padding: 3rem 1.5rem;
             }
-            
+
+            .glass-skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .glass-skill-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .glass-card-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.25rem;
+            }
+
             .project-filters {
                 flex-wrap: wrap;
             }
